@@ -7,25 +7,17 @@
       #login, #loggedin {
         display: none;
       }
-      .text-overflow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 500px;
-      }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <div id="login">
+      <div id="loggedout">
         <h1>Reorderify</h1>
         <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
       </div>
       <div id="loggedin">
         <div id="user-profile">
-        </div>
-        <div id="oauth">
         </div>
       </div>
     </div>
@@ -52,5 +44,6 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
     <script src="./app.js"></script>
 </html>

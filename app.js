@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // Constants
   var STATE_KEY = 'spotify_auth_state';
-  var SPOTIFY_SCOPES = 'user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
+  var SPOTIFY_SCOPES = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
   var SPOTIFY_CLIENT_ID = '945d641a6b2e4d0eb717daa495f4e188'; // Your client id
   var SPOTIFY_REDIRECT_URI = 'http://localhost:8080/'; // Your redirect uri
 
@@ -18,21 +18,21 @@ $(document).ready(function () {
   
   // Check for incorrect state
   if (access_token && (state == null || state !== storedState)) {
-    alert('There was an error during the authentication');
-    window.location = '/'; // refresh if there was an error
+    // alert('There was an error during the authentication');
+    window.location = '/'; // refresh if state is wrong
   } else {
     localStorage.removeItem(STATE_KEY);
     // If there is an access token, 
     if (access_token) {
-      renderUserProfile();
+      renderLoggedIn();
     } else {
-      renderHome();
+      renderLoggedOut();
     }
-
-    $('#login-button').on('click', requestAuthorization);
   }
 
-  function renderUserProfile() {
+  function renderLoggedIn() {
+
+    // Get user info
     $.ajax({
         url: 'https://api.spotify.com/v1/me',
         headers: {
@@ -40,16 +40,17 @@ $(document).ready(function () {
         },
         success: function (response) {
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-
-          $('#login').hide();
-          $('#loggedin').show();
         }
       });
+      // Show section
+      $('#loggedout').hide();
+      $('#loggedin').show();
   }
 
-  function renderHome() {
-    $('#login').show();
+  function renderLoggedOut() {
+    $('#loggedout').show();
     $('#loggedin').hide();
+    $('#login-button').on('click', requestAuthorization);
   }
 
   function renderPlaylists() {
@@ -66,12 +67,11 @@ $(document).ready(function () {
     var state = generateRandomString(16);
 
     localStorage.setItem(STATE_KEY, state);
-    var scope = 'user-read-private user-read-email';
 
     var url = 'https://accounts.spotify.com/authorize';
     url += '?response_type=token';
     url += '&client_id=' + encodeURIComponent(SPOTIFY_CLIENT_ID);
-    url += '&scope=' + encodeURIComponent(scope);
+    url += '&scope=' + encodeURIComponent(SPOTIFY_SCOPES);
     url += '&redirect_uri=' + encodeURIComponent(SPOTIFY_REDIRECT_URI);
     url += '&state=' + encodeURIComponent(state);
 
