@@ -1,0 +1,24 @@
+<!doctype html><html><head><title>Reorderify</title><link rel=stylesheet href=//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css><style type=text/css>#login, #loggedin, #playlists, #tracks {
+        display: none;
+      }</style></head><body><div class=container><div id=loggedout class="col-md-6 col-md-offset-3"><h1>Reorderify</h1><button id=login-button class="btn btn-primary">Log in with Spotify</button></div><div id=loggedin class="col-md-6 col-md-offset-3"><h1>Reorderify</h1><div id=user-profile></div><div id=playlists></div><div id=tracks></div></div></div><script id=user-profile-template type=text/x-handlebars-template><div class="media">
+        <div class="pull-left">
+          <img class="media-object" width="64" src="{{images.0.url}}" />
+        </div>
+        <div class="media-body">
+          <dl class="dl-horizontal">
+            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
+            <dt>Id</dt><dd>{{id}}</dd>
+          </dl>
+        </div>
+      </div></script><script id=playlists-template type=text/x-handlebars-template><h3>Playlists</h3>
+      <ul>
+        {{#each items}}
+        <li><a href="#" class="playlist-link" data-playlist-href="{{this.href}}">{{this.name}}</a></li>
+        {{/each}}
+      </ul></script><script id=tracks-template type=text/x-handlebars-template><h3>{{name}}</h3>
+      <button id="tracks-back" class="btn btn-primary btn-sm">Back</button>
+      <ul id="sortable" class="list-group text-center">
+        {{#each tracks.items}}
+        <li class="list-group-item">{{this.track.name}} - {{this.track.artists.0.name}}</li>
+        {{/each}}
+      </ul></script><script type=text/javascript src=https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js></script><script src=http://code.jquery.com/jquery-3.1.0.min.js integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="crossorigin=anonymous></script><script src=http://code.jquery.com/ui/1.12.0/jquery-ui.min.js integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="crossorigin=anonymous></script><script src=./app.js></script></body></html>
