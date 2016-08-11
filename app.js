@@ -91,18 +91,26 @@ $(document).ready(function () {
           console.log(response);
           
           $('#tracks').html(tracksTemplate(response));
+
+          var startIndex, endIndex;
           $('#sortable').sortable({
             update: function(event, ui) {
-              // TODO: call reorderTracks()
+              endIndex = ui.item.index();
+              reorderTracks(startIndex, endIndex);
+            },
+            start: function(event, ui) {
+              startIndex = ui.item.index();
             }
           });
+
+          // Show the tracks listing
           $('#playlists').hide();
           $('#tracks').show();  
         }
       });
   }
 
-  function reorderTracks() {
+  function reorderTracks(startIndex, endIndex) {
 
   }
 
