@@ -12,13 +12,13 @@
         </div>
       </div></script><script id=playlists-template type=text/x-handlebars-template><h3>Playlists</h3>
       <ul>
-        {{#each items}}
-        <li><a href="#" class="playlist-link" data-playlist-href="{{this.href}}">{{this.name}}</a></li>
-        {{/each}}
+        {{#each_owned items}}
+        <li><a href="#" class="playlist-link" data-playlist-href="{{href}}">{{name}}</a></li>
+        {{/each_owned}}
       </ul></script><script id=tracks-template type=text/x-handlebars-template><h3>{{name}}</h3>
       <button id="tracks-back" class="btn btn-primary btn-sm">Back</button>
       <ul id="sortable" class="list-group text-center">
         {{#each tracks.items}}
-        <li class="list-group-item">{{this.track.name}} - {{this.track.artists.0.name}}</li>
+        <li class="list-group-item">{{track.name}} - {{track.artists.0.name}}</li>
         {{/each}}
       </ul></script><script type=text/javascript src=https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js></script><script src=http://code.jquery.com/jquery-3.1.0.min.js integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="crossorigin=anonymous></script><script src=http://code.jquery.com/ui/1.12.0/jquery-ui.min.js integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="crossorigin=anonymous></script><script src=./app.js></script></body></html>
