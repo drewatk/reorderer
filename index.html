@@ -4,7 +4,7 @@
     <title>Reorderify</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
-      #login, #loggedin {
+      #login, #loggedin, #playlists, #tracks {
         display: none;
       }
     </style>
@@ -19,9 +19,14 @@
       <div id="loggedin">
         <div id="user-profile">
         </div>
+        <div id="playlists">
+        </div>
+        <div id="tracks">
+        </div>
       </div>
     </div>
 
+    <!--User profile template -->
     <script id="user-profile-template" type="text/x-handlebars-template">
       <h1>Logged in as {{display_name}}</h1>
       <div class="media">
@@ -32,14 +37,25 @@
           <dl class="dl-horizontal">
             <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
             <dt>Id</dt><dd>{{id}}</dd>
-            <dt>Email</dt><dd>{{email}}</dd>
-            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-            <dt>Country</dt><dd>{{country}}</dd>
           </dl>
         </div>
       </div>
+    </script>
+
+    <!--Playlists Template-->
+    <script id="playlists-template" type="text/x-handlebars-template">
+      <h4>Playlists</h4>
+      <table class="table">
+        {{#each items}}
+        <ul>
+          <li><a href="#" class="playlist-link" data-playlist-id="{{this.id}}">{{this.name}}</a></li>
+        </ul>
+        {{/each}}
+    </script>
+
+    <!--Tracks Template-->
+    <script id="tracks-template" type="text/x-handlebars-template">
+
     </script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>

@@ -40,11 +40,13 @@ $(document).ready(function () {
         },
         success: function (response) {
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+          $('#loggedout').hide();
+          $('#loggedin').show();
         }
       });
       // Show section
-      $('#loggedout').hide();
-      $('#loggedin').show();
+      
+      renderPlaylists();
   }
 
   function renderLoggedOut() {
@@ -54,11 +56,27 @@ $(document).ready(function () {
   }
 
   function renderPlaylists() {
-
+    // Get users playlists
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me/playlists',
+        headers: {
+          'Authorization': 'Bearer ' + access_token
+        },
+        success: function (response) {
+          console.log(response);
+          playlistsTemplate = Handlebars.compile($('#playlists-template').html());
+          $('#playlists').html(playlistsTemplate(response));
+          $('.playlist-link').on("click", function() {
+            renderTracks($(this).data('playlistId'));
+          });
+          $('#playlists').show();
+          $('#tracks').hide();  
+        }
+      }); 
   }
 
-  function renderTracks() {
-
+  function renderTracks(playlistId) {
+    console.log(playlistId);
   }
 
   function requestAuthorization() {
