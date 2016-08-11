@@ -36,23 +36,22 @@ $(document).ready(function () {
   }
 
   function renderLoggedIn() {
-
     // Get user info
     $.ajax({
-        url: 'https://api.spotify.com/v1/me',
-        headers: {
-          'Authorization': 'Bearer ' + access_token
-        },
-        success: function (response) {
-          userId = response.id;
-          userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-          $('#loggedout').hide();
-          $('#loggedin').show();
-        }
-      });
-      // Show section
-      
-      renderPlaylists();
+      url: 'https://api.spotify.com/v1/me',
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      },
+      success: function (response) {
+        userId = response.id;
+        userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+        $('#loggedout').hide();
+        $('#loggedin').show();
+      }
+    });
+    // Show section
+    
+    renderPlaylists();
   }
 
   function renderLoggedOut() {
@@ -64,56 +63,69 @@ $(document).ready(function () {
   function renderPlaylists() {
     // Get users playlists
     $.ajax({
-        url: 'https://api.spotify.com/v1/me/playlists',
-        headers: {
-          'Authorization': 'Bearer ' + access_token
-        },
-        success: function (response) {
-          console.log(response);
-          $('#playlists').html(playlistsTemplate(response));
-          $('.playlist-link').on("click", function() {
-            renderTracks($(this).data('playlistHref'));
-          });
-          $('#playlists').show();
-          $('#tracks').hide();  
-        }
-      }); 
+      url: 'https://api.spotify.com/v1/me/playlists',
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      },
+      success: function (response) {
+        console.log(response);
+        $('#playlists').html(playlistsTemplate(response));
+        $('.playlist-link').on("click", function() {
+          renderTracks($(this).data('playlistHref'));
+        });
+        $('#playlists').show();
+        $('#tracks').hide();  
+      }
+    }); 
   }
 
   function renderTracks(playlistHref) {
     // Get a playlist's tracks
     $.ajax({
-        url: playlistHref,
-        headers: {
-          'Authorization': 'Bearer ' + access_token
-        },
-        success: function (response) {
-          console.log(response);
-          
-          $('#tracks').html(tracksTemplate(response));
+      url: playlistHref,
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      },
+      success: function (response) {
+        console.log(response);
+        
+        $('#tracks').html(tracksTemplate(response));
 
-          var startIndex, endIndex;
-          $('#sortable').sortable({
-            update: function(event, ui) {
-              endIndex = ui.item.index();
-              reorderTracks(response.id, startIndex, endIndex);
-            },
-            start: function(event, ui) {
-              startIndex = ui.item.index();
-            }
-          });
+        var startIndex, endIndex;
+        $('#sortable').sortable({
+          update: function(event, ui) {
+            endIndex = ui.item.index();
+            reorderTracks(response.tracks.href, startIndex, endIndex);
+          },
+          start: function(event, ui) {
+            startIndex = ui.item.index();
+          }
+        });
 
-          // Show the tracks listing
-          $('#playlists').hide();
-          $('#tracks').show();  
-        }
-      });
+        // Show the tracks listing
+        $('#playlists').hide();
+        $('#tracks').show();  
+      }
+    });
   }
 
-  function reorderTracks(playlistId, startIndex, endIndex) {
-    console.log(arguments);
-
-    // TODO: return boolean of success
+  function reorderTracks(tracksHref, startIndex, endIndex) {
+    $.ajax({
+      url: tracksHref,
+      method: 'PUT',
+      data: JSON.stringify({
+        'range_start': startIndex,
+        'insert_before': endIndex
+      }),
+      contentType: 'application/json',
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      },
+      success: function(response) {
+        // TODO: Give a visual confirmation that the change happened
+        console.log(response);
+      }
+    });
   }
 
   function requestAuthorization() {
