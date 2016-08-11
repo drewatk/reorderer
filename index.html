@@ -12,11 +12,12 @@
 
   <body>
     <div class="container">
-      <div id="loggedout">
+      <div id="loggedout" class="col-md-6 col-md-offset-3">
         <h1>Reorderify</h1>
         <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
       </div>
-      <div id="loggedin">
+      <div id="loggedin" class="col-md-6 col-md-offset-3">
+        <h1>Reorderify</h1>
         <div id="user-profile">
         </div>
         <div id="playlists">
@@ -28,10 +29,10 @@
 
     <!--User profile template -->
     <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Logged in as {{display_name}}</h1>
+      
       <div class="media">
         <div class="pull-left">
-          <img class="media-object" width="150" src="{{images.0.url}}" />
+          <img class="media-object" width="64" src="{{images.0.url}}" />
         </div>
         <div class="media-body">
           <dl class="dl-horizontal">
@@ -44,7 +45,7 @@
 
     <!--Playlists Template-->
     <script id="playlists-template" type="text/x-handlebars-template">
-      <h4>Playlists</h4>
+      <h3>Playlists</h3>
       <ul>
         {{#each items}}
         <li><a href="#" class="playlist-link" data-playlist-href="{{this.href}}">{{this.name}}</a></li>
@@ -54,10 +55,11 @@
 
     <!--Tracks Template-->
     <script id="tracks-template" type="text/x-handlebars-template">
-      <h4>{{name}}</h4>
-      <ul id="sortable">
+      <h3>{{name}}</h3>
+      <button id="tracks-back" class="btn btn-primary btn-sm">Back</button>
+      <ul id="sortable" class="list-group text-center">
         {{#each tracks.items}}
-        <li>{{this.track.name}}</li>
+        <li class="list-group-item">{{this.track.name}} - {{this.track.artists.0.name}}</li>
         {{/each}}
       </ul>
     </script>

@@ -70,7 +70,7 @@ $(document).ready(function () {
       success: function (response) {
         console.log(response);
         $('#playlists').html(playlistsTemplate(response));
-        $('.playlist-link').on("click", function() {
+        $('.playlist-link').on('click', function() {
           renderTracks($(this).data('playlistHref'));
         });
         $('#playlists').show();
@@ -89,8 +89,10 @@ $(document).ready(function () {
       success: function (response) {
         console.log(response);
         
+        // Set template from tracks
         $('#tracks').html(tracksTemplate(response));
 
+        // Set up sortable
         var startIndex, endIndex;
         $('#sortable').sortable({
           update: function(event, ui) {
@@ -101,6 +103,11 @@ $(document).ready(function () {
             startIndex = ui.item.index();
           }
         });
+
+        // Set up back button to go back to playlists view
+        $('#tracks-back').on('click', function() {
+          renderPlaylists();
+        })
 
         // Show the tracks listing
         $('#playlists').hide();
