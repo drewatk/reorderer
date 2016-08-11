@@ -47,9 +47,9 @@
     <script id="playlists-template" type="text/x-handlebars-template">
       <h3>Playlists</h3>
       <ul>
-        {{#each items}}
-        <li><a href="#" class="playlist-link" data-playlist-href="{{this.href}}">{{this.name}}</a></li>
-        {{/each}}
+        {{#each_owned items}}
+        <li><a href="#" class="playlist-link" data-playlist-href="{{href}}">{{name}}</a></li>
+        {{/each_owned}}
       </ul>
     </script>
 
@@ -59,7 +59,7 @@
       <button id="tracks-back" class="btn btn-primary btn-sm">Back</button>
       <ul id="sortable" class="list-group text-center">
         {{#each tracks.items}}
-        <li class="list-group-item">{{this.track.name}} - {{this.track.artists.0.name}}</li>
+        <li class="list-group-item">{{track.name}} - {{track.artists.0.name}}</li>
         {{/each}}
       </ul>
     </script>

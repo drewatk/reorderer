@@ -69,6 +69,18 @@ $(document).ready(function () {
       },
       success: function (response) {
         console.log(response);
+
+        // Handlebars helper that returns each playlist the user ownes
+        Handlebars.registerHelper('each_owned', function(items, options) {
+          result = '';
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].owner.id === userId) {
+              result += options.fn(items[i]);
+            }
+          }
+          return result;
+        });
+
         $('#playlists').html(playlistsTemplate(response));
         $('.playlist-link').on('click', function() {
           renderTracks($(this).data('playlistHref'));
