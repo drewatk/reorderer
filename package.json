@@ -1,0 +1,22 @@
+{
+  "name": "reorderify",
+  "version": "1.0.0",
+  "description": "Reorder Spotify Playlists (Because you should be able to anyway)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:js": "uglifyjs --compress --mangle --output dist/app.js -- app.js",
+    "build:html": "html-minifier --collapse-whitespace --remove-attribute-quotes --remove-redundant-attributes --remove-tag-whitespace --process-scripts \"text-handlebars-template\" --output dist/index.html -- index.html",
+    "build": "npm run build:js & npm run build:html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewatk/reorderify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drewatk/reorderify/issues"
+  },
+  "homepage": "https://github.com/drewatk/reorderify#readme"
+}
