@@ -5,11 +5,16 @@ $(document).ready(function () {
   var SPOTIFY_CLIENT_ID = '945d641a6b2e4d0eb717daa495f4e188'; // Your client id
   var SPOTIFY_REDIRECT_URI = 'http://localhost:8080/'; // Your redirect uri
 
-  // Set up handlebars templates
+  // User's spotify id
+  var userId;
+  // Compile Handlebars templates
   var userProfileSource = document.getElementById('user-profile-template').innerHTML,
     userProfileTemplate = Handlebars.compile(userProfileSource),
     userProfilePlaceholder = document.getElementById('user-profile');
+  var tracksTemplate = Handlebars.compile($('#tracks-template').html());
+  var playlistsTemplate = Handlebars.compile($('#playlists-template').html());
 
+  // Get params from url
   var params = getHashParams();
 
   var access_token = params.access_token,
@@ -39,6 +44,7 @@ $(document).ready(function () {
           'Authorization': 'Bearer ' + access_token
         },
         success: function (response) {
+          userId = response.id;
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
           $('#loggedout').hide();
           $('#loggedin').show();
@@ -64,10 +70,9 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log(response);
-          playlistsTemplate = Handlebars.compile($('#playlists-template').html());
           $('#playlists').html(playlistsTemplate(response));
           $('.playlist-link').on("click", function() {
-            renderTracks($(this).data('playlistId'));
+            renderTracks($(this).data('playlistHref'));
           });
           $('#playlists').show();
           $('#tracks').hide();  
@@ -75,8 +80,30 @@ $(document).ready(function () {
       }); 
   }
 
-  function renderTracks(playlistId) {
-    console.log(playlistId);
+  function renderTracks(playlistHref) {
+    // Get a playlist's tracks
+    $.ajax({
+        url: playlistHref + '/tracks',
+        headers: {
+          'Authorization': 'Bearer ' + access_token
+        },
+        success: function (response) {
+          console.log(response);
+          
+          $('#tracks').html(tracksTemplate(response));
+          $('#sortable').sortable({
+            update: function(event, ui) {
+              // TODO: call reorderTracks()
+            }
+          });
+          $('#playlists').hide();
+          $('#tracks').show();  
+        }
+      });
+  }
+
+  function reorderTracks() {
+
   }
 
   function requestAuthorization() {

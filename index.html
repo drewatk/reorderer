@@ -45,17 +45,20 @@
     <!--Playlists Template-->
     <script id="playlists-template" type="text/x-handlebars-template">
       <h4>Playlists</h4>
-      <table class="table">
+      <ul>
         {{#each items}}
-        <ul>
-          <li><a href="#" class="playlist-link" data-playlist-id="{{this.id}}">{{this.name}}</a></li>
-        </ul>
+        <li><a href="#" class="playlist-link" data-playlist-href="{{this.href}}">{{this.name}}</a></li>
         {{/each}}
+      </ul>
     </script>
 
     <!--Tracks Template-->
     <script id="tracks-template" type="text/x-handlebars-template">
-
+      <ul id="sortable">
+        {{#each items}}
+        <li>{{this.track.name}}</li>
+        {{/each}}
+      </ul>
     </script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
