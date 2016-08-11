@@ -83,7 +83,7 @@ $(document).ready(function () {
   function renderTracks(playlistHref) {
     // Get a playlist's tracks
     $.ajax({
-        url: playlistHref + '/tracks',
+        url: playlistHref,
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
@@ -96,7 +96,7 @@ $(document).ready(function () {
           $('#sortable').sortable({
             update: function(event, ui) {
               endIndex = ui.item.index();
-              reorderTracks(startIndex, endIndex);
+              reorderTracks(response.id, startIndex, endIndex);
             },
             start: function(event, ui) {
               startIndex = ui.item.index();
@@ -110,8 +110,10 @@ $(document).ready(function () {
       });
   }
 
-  function reorderTracks(startIndex, endIndex) {
+  function reorderTracks(playlistId, startIndex, endIndex) {
+    console.log(arguments);
 
+    // TODO: return boolean of success
   }
 
   function requestAuthorization() {

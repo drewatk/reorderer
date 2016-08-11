@@ -54,8 +54,9 @@
 
     <!--Tracks Template-->
     <script id="tracks-template" type="text/x-handlebars-template">
+      <h4>{{name}}</h4>
       <ul id="sortable">
-        {{#each items}}
+        {{#each tracks.items}}
         <li>{{this.track.name}}</li>
         {{/each}}
       </ul>
