@@ -3,7 +3,8 @@ $(document).ready(function () {
   var STATE_KEY = 'spotify_auth_state';
   var SPOTIFY_SCOPES = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
   var SPOTIFY_CLIENT_ID = '945d641a6b2e4d0eb717daa495f4e188'; // Your client id
-  var SPOTIFY_REDIRECT_URI = 'http://localhost:8080/'; // Your redirect uri
+  var SPOTIFY_REDIRECT_URI = window.location.href; // Your redirect uri
+  console.log(SPOTIFY_REDIRECT_URI);
 
   // User's spotify id
   var userId;
@@ -20,14 +21,14 @@ $(document).ready(function () {
   var access_token = params.access_token,
     state = params.state,
     storedState = localStorage.getItem(STATE_KEY);
-  
+
   // Check for incorrect state
-  if (access_token && (state == null || state !== storedState)) {
+  if (access_token && (state === null || state !== storedState)) {
     // alert('There was an error during the authentication');
     window.location = '/'; // refresh if state is wrong
   } else {
     localStorage.removeItem(STATE_KEY);
-    // If there is an access token, 
+    // If there is an access token,
     if (access_token) {
       renderLoggedIn();
     } else {
@@ -50,7 +51,7 @@ $(document).ready(function () {
       }
     });
     // Show section
-    
+
     renderPlaylists();
   }
 
@@ -86,9 +87,9 @@ $(document).ready(function () {
           renderTracks($(this).data('playlistHref'));
         });
         $('#playlists').show();
-        $('#tracks').hide();  
+        $('#tracks').hide();
       }
-    }); 
+    });
   }
 
   function renderTracks(playlistHref) {
@@ -100,7 +101,7 @@ $(document).ready(function () {
       },
       success: function (response) {
         console.log(response);
-        
+
         // Set template from tracks
         $('#tracks').html(tracksTemplate(response));
 
@@ -119,11 +120,11 @@ $(document).ready(function () {
         // Set up back button to go back to playlists view
         $('#tracks-back').on('click', function() {
           renderPlaylists();
-        })
+        });
 
         // Show the tracks listing
         $('#playlists').hide();
-        $('#tracks').show();  
+        $('#tracks').show();
       }
     });
   }
